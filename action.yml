@@ -1,0 +1,38 @@
+# .github/actions/ai-review/action.yml
+name: 'AI Code Review'
+description: 'Uses Gemini to review code changes in a PR'
+author: 'Your Name/Org'
+
+# Define inputs the action accepts
+inputs:
+  github-token:
+    description: 'GitHub token for API calls'
+    required: true
+  gemini-api-key:
+    description: 'API Key for Google Gemini'
+    required: true
+  # Optional: Allow specifying the Gemini model
+  gemini-model:
+    description: 'Which Gemini model to use (e.g., gemini-1.5-flash, gemini-pro)'
+    required: false
+    default: 'gemini-1.5-flash' # Default to flash for speed/cost
+  ignore-patterns:
+    description: |
+      Multiline string of glob patterns for file paths to exclude from the review.
+      Matches against the file path in the PR (e.g., 'dist/**', '**/package-lock.json').
+    required: false
+    default: '' # Default to no patterns
+
+# Define outputs the action produces (optional, as we post the comment directly)
+# outputs:
+#   review-comment:
+#     description: 'The generated review comment from Gemini'
+
+runs:
+  using: 'node20' # Specify the runtime
+  main: 'dist/index.js' # Point to the compiled JS entry point (we'll usencc)
+
+# Branding for the marketplace (optional)
+branding:
+  icon: 'message-square'
+  color: 'blue' 
